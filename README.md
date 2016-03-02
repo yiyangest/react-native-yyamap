@@ -17,6 +17,9 @@ AMap (Gaode map) sdk for react-native
    the `RCTAMap` source files are referring to by pointing to the
    header files installed within the `react-native` `node_modules`
    directory.
+4. Add `node_modules/react-native-yymap/RCTAMap/RCTAMap/AMap/MAMapkit.framework` and `MAMapkit.framework/AMap.bundle` to your project.
+5. Set your project's framework Search Paths to include `$(PROJECT_DIR)/../node_modules/react-native-yyamap/ios/RCTAMap/RCTAMap/AMap`.
+6. Set your project's Header Search paths to include `$(SRCROOT)/../node_modules/react-native-yyamap/ios/RCTAMap/RCTAMap`.
 4. Whenever you want to use it within React code now you can: `var MapView =
    require('react-native-yyamap');`
 
