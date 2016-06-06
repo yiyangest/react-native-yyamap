@@ -287,6 +287,7 @@ RCT_CUSTOM_VIEW_PROPERTY(region, MACoordinateRegion, RCTAMap)
     mapView.regionChangeObserveTimer = [NSTimer timerWithTimeInterval:RCTAMapRegionChangeObserveInterval target:self selector:@selector(_onTick:) userInfo:@{RCTAMapViewKey: mapView} repeats:YES];
     
     [[NSRunLoop mainRunLoop] addTimer:mapView.regionChangeObserveTimer forMode:NSRunLoopCommonModes];
+    mapView.hasStartedRendering = YES;
 }
 
 - (void)mapView:(RCTAMap *)mapView regionDidChangeAnimated:(BOOL)animated
