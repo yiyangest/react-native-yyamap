@@ -1,7 +1,9 @@
 'use strict';
 
-import React from 'react';
-import {
+import React, { Component, PropTypes } from 'react';
+import ReactNative from 'react-native';
+
+var {
     EdgeInsetsPropType,
     Image,
     NativeMethodsMixin,
@@ -12,7 +14,7 @@ import {
     UIManager,
     processColor,
     ColorPropType,
-} from 'react-native';
+} = require('react-native');
 
 import deprecatedPropType from 'react-native/Libraries/Utilities/deprecatedPropType';
 import resolveAssetSource from 'react-native/Libraries/Image/resolveAssetSource';
