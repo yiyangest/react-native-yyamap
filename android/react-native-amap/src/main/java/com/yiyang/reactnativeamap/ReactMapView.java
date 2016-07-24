@@ -1,6 +1,7 @@
 package com.yiyang.reactnativeamap;
 
-import android.content.Context;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.amap.api.maps2d.AMap.OnCameraChangeListener;
 import com.amap.api.maps2d.MapView;
@@ -11,133 +12,124 @@ import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.uimanager.events.RCTEventEmitter;
 
-import java.util.ArrayList;
-import java.util.List;
+import android.content.Context;
 
 /**
  * Created by yiyang on 16/2/29.
  */
 public class ReactMapView extends MapView implements OnCameraChangeListener {
-    private List<ReactMapMarker> mMarkers = new ArrayList<ReactMapMarker>();
-    private List<String> mMarkerIds = new ArrayList<String>();
+	private List<ReactMapMarker> mMarkers = new ArrayList<ReactMapMarker>();
+	private List<String> mMarkerIds = new ArrayList<String>();
 
-    private List<ReactMapOverlay> mOverlays = new ArrayList<ReactMapOverlay>();
-    private List<String> mOverlayIds = new ArrayList<String>();
+	private List<ReactMapOverlay> mOverlays = new ArrayList<ReactMapOverlay>();
+	private List<String> mOverlayIds = new ArrayList<String>();
 
-    public ReactMapView(Context context) {
-        super(context);
-        this.getMap().setOnCameraChangeListener(this);
-    }
+	private static final double MERCATOR_OFFSET = 268435456;
+	private static final double MERCATOR_RADIUS = 85445659.44705395;
 
-    public void setOverlays(List<ReactMapOverlay> overlays) {
-        List<String> newOverlayIds = new ArrayList<String>();
-        List<ReactMapOverlay> overlaysToDelete = new ArrayList<ReactMapOverlay>();
-        List<ReactMapOverlay> overlaysToAdd = new ArrayList<ReactMapOverlay>();
+	public ReactMapView(Context context) {
+		super(context);
+		this.getMap().setOnCameraChangeListener(this);
+	}
 
-        for (ReactMapOverlay overlay :
-                overlays) {
-            if (overlay instanceof ReactMapOverlay == false) {
-                continue;
-            }
+	public void setOverlays(List<ReactMapOverlay> overlays) {
+		List<String> newOverlayIds = new ArrayList<String>();
+		List<ReactMapOverlay> overlaysToDelete = new ArrayList<ReactMapOverlay>();
+		List<ReactMapOverlay> overlaysToAdd = new ArrayList<ReactMapOverlay>();
 
-            newOverlayIds.add(overlay.getId());
+		for (ReactMapOverlay overlay : overlays) {
+			if (overlay instanceof ReactMapOverlay == false) {
+				continue;
+			}
 
-            if (!mOverlayIds.contains(overlay.getId())) {
-                overlaysToAdd.add(overlay);
-            }
-        }
+			newOverlayIds.add(overlay.getId());
 
-        for (ReactMapOverlay overlay :
-                this.mOverlays) {
-            if (overlay instanceof ReactMapOverlay == false) {
-                continue;
-            }
+			if (!mOverlayIds.contains(overlay.getId())) {
+				overlaysToAdd.add(overlay);
+			}
+		}
 
-            if (!newOverlayIds.contains(overlay.getId())) {
-                overlaysToDelete.add(overlay);
-            }
-        }
+		for (ReactMapOverlay overlay : this.mOverlays) {
+			if (overlay instanceof ReactMapOverlay == false) {
+				continue;
+			}
 
-        if (!overlaysToDelete.isEmpty()) {
-            for (ReactMapOverlay overlay :
-                    overlaysToDelete) {
-                overlay.getPolyline().remove();
-                this.mOverlays.remove(overlay);
-            }
-        }
+			if (!newOverlayIds.contains(overlay.getId())) {
+				overlaysToDelete.add(overlay);
+			}
+		}
 
-        if (!overlaysToAdd.isEmpty()) {
-            for (ReactMapOverlay overlay:
-                    overlaysToAdd) {
-                if (overlay.getOptions() != null) {
-                    overlay.addToMap(this.getMap());
-                    this.mOverlays.add(overlay);
-                }
-            }
-        }
+		if (!overlaysToDelete.isEmpty()) {
+			for (ReactMapOverlay overlay : overlaysToDelete) {
+				overlay.getPolyline().remove();
+				this.mOverlays.remove(overlay);
+			}
+		}
 
-        this.mOverlayIds = newOverlayIds;
+		if (!overlaysToAdd.isEmpty()) {
+			for (ReactMapOverlay overlay : overlaysToAdd) {
+				if (overlay.getOptions() != null) {
+					overlay.addToMap(this.getMap());
+					this.mOverlays.add(overlay);
+				}
+			}
+		}
 
-    }
+		this.mOverlayIds = newOverlayIds;
 
-    public void setMarker(List<ReactMapMarker> markers) {
+	}
 
-        List<String> newMarkerIds = new ArrayList<String>();
-        List<ReactMapMarker> markersToDelete = new ArrayList<ReactMapMarker>();
-        List<ReactMapMarker> markersToAdd = new ArrayList<ReactMapMarker>();
+	public void setMarker(List<ReactMapMarker> markers) {
 
-        for (ReactMapMarker marker :
-                markers) {
-            if (marker instanceof ReactMapMarker == false) {
-                continue;
-            }
+		List<String> newMarkerIds = new ArrayList<String>();
+		List<ReactMapMarker> markersToDelete = new ArrayList<ReactMapMarker>();
+		List<ReactMapMarker> markersToAdd = new ArrayList<ReactMapMarker>();
 
-            newMarkerIds.add(marker.getId());
+		for (ReactMapMarker marker : markers) {
+			if (marker instanceof ReactMapMarker == false) {
+				continue;
+			}
 
-            if (!mMarkerIds.contains(marker.getId())) {
-                markersToAdd.add(marker);
-            }
-        }
+			newMarkerIds.add(marker.getId());
 
-        for (ReactMapMarker marker :
-                this.mMarkers) {
-            if (marker instanceof ReactMapMarker == false) {
-                continue;
-            }
+			if (!mMarkerIds.contains(marker.getId())) {
+				markersToAdd.add(marker);
+			}
+		}
 
-            if (!newMarkerIds.contains(marker.getId())) {
-                markersToDelete.add(marker);
-            }
-        }
+		for (ReactMapMarker marker : this.mMarkers) {
+			if (marker instanceof ReactMapMarker == false) {
+				continue;
+			}
 
-        if (!markersToDelete.isEmpty()) {
-            for (ReactMapMarker marker :
-                    markersToDelete) {
-                marker.getMarker().destroy();
-                this.mMarkers.remove(marker);
-            }
-        }
+			if (!newMarkerIds.contains(marker.getId())) {
+				markersToDelete.add(marker);
+			}
+		}
 
-        if (!markersToAdd.isEmpty()) {
-            for (ReactMapMarker marker :
-                    markersToAdd) {
-                if (marker.getOptions() != null) {
-                    marker.addToMap(this.getMap());
-                    this.mMarkers.add(marker);
-                }
-            }
-        }
+		if (!markersToDelete.isEmpty()) {
+			for (ReactMapMarker marker : markersToDelete) {
+				marker.getMarker().destroy();
+				this.mMarkers.remove(marker);
+			}
+		}
 
-        this.mMarkerIds = newMarkerIds;
-    }
-    
-    public void onNativeEvent(String eventName, WritableMap eventData) {
-    	ReactContext reactContext = (ReactContext)getContext();
-        reactContext.getJSModule(RCTEventEmitter.class).receiveEvent(
-            getId(),
-            eventName,
-            eventData);
-    }
+		if (!markersToAdd.isEmpty()) {
+			for (ReactMapMarker marker : markersToAdd) {
+				if (marker.getOptions() != null) {
+					marker.addToMap(this.getMap());
+					this.mMarkers.add(marker);
+				}
+			}
+		}
+
+		this.mMarkerIds = newMarkerIds;
+	}
+
+	public void onNativeEvent(String eventName, WritableMap eventData) {
+		ReactContext reactContext = (ReactContext) getContext();
+		reactContext.getJSModule(RCTEventEmitter.class).receiveEvent(getId(), eventName, eventData);
+	}
 
 	@Override
 	public void onCameraChange(CameraPosition position) {
@@ -145,7 +137,6 @@ public class ReactMapView extends MapView implements OnCameraChangeListener {
 		WritableMap eventData = Arguments.createMap();
 		WritableMap region = Arguments.createMap();
 		eventData.putBoolean("continuous", true);
-		eventData.putMap("region", region);
 		region.putDouble("latitude", position.target.latitude);
 		region.putDouble("longitude", position.target.longitude);
 		region.putDouble("latitudeDelta", delta.latitude);
