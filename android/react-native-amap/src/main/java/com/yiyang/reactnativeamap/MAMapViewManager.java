@@ -127,8 +127,9 @@ public class MAMapViewManager extends SimpleViewManager<ReactMapView> {
         if (center != null) {
             double latitude = center.getDouble("latitude");
             double longitude = center.getDouble("longitude");
+            int zoomLevel = center.getInt("zoomLevel");
             CameraPosition cameraPosition = new CameraPosition.Builder()
-                    .target(new LatLng(latitude, longitude))
+                    .target(new LatLng(latitude, longitude)).zoom(zoomLevel)
                     .build();
             mapView.getMap().moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
         }
