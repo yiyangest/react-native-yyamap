@@ -144,6 +144,22 @@ const MAMapView= React.createClass({
       latitudeDelta: React.PropTypes.number,
       longitudeDelta: React.PropTypes.number,
     }),
+    
+    circle: React.PropTypes.shape({
+      /**
+       * Coordinates for the center of the map.
+       */
+      latitude: React.PropTypes.number.isRequired,
+      longitude: React.PropTypes.number.isRequired,
+
+      /**
+       
+       */
+      radius: React.PropTypes.number,
+      strokeColor: React.PropTypes.number,
+      fillColor: React.PropTypes.number,
+      strokeWidth: React.PropTypes.number
+    }),
 
     /**
      * Map annotations with title/subtitle.
