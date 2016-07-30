@@ -19,8 +19,5 @@
   "bugs": {
     "url": "https://github.com/yptech/react-native-yyamap.git/issues"
   },
-  "homepage": "https://github.com/yptech/react-native-yyamap.git#readme",
-  "devDependencies": {
-    "react-native": "^0.25.1"
-  }
+  "homepage": "https://github.com/yptech/react-native-yyamap.git#readme"
 }
