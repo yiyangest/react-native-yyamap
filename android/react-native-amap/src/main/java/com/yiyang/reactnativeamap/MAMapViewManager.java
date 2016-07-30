@@ -130,9 +130,10 @@ public class MAMapViewManager extends SimpleViewManager<ReactMapView> {
 			double longitudeDelta = center.getDouble("longitudeDelta");
 			LatLng region = new LatLng(latitude, longitude);
 			LatLng delta = new LatLng(latitudeDelta, longitudeDelta);
-			CameraPosition cameraPosition = new CameraPosition.Builder().target(region).zoom(
-					LatLngUtils.deltaToZoom(delta, region, this.getMapView().getWidth(), this.getMapView().getHeight()))
-					.build();
+			float zoom = LatLngUtils.deltaToZoom(delta, region, this.getMapView().getWidth(),
+					this.getMapView().getHeight());
+			Log.d(RCT_CLASS, "zoomlave: " + zoom);
+			CameraPosition cameraPosition = new CameraPosition.Builder().target(region).zoom(zoom).build();
 			mapView.getMap().moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 		}
 	}
