@@ -24,9 +24,6 @@ public class ReactMapView extends MapView implements OnCameraChangeListener {
 	private List<ReactMapOverlay> mOverlays = new ArrayList<ReactMapOverlay>();
 	private List<String> mOverlayIds = new ArrayList<String>();
 
-	private static final double MERCATOR_OFFSET = 268435456;
-	private static final double MERCATOR_RADIUS = 85445659.44705395;
-
 	public ReactMapView(Context context) {
 		super(context);
 		this.getMap().setOnCameraChangeListener(this);
@@ -133,7 +130,7 @@ public class ReactMapView extends MapView implements OnCameraChangeListener {
 
 	@Override
 	public void onCameraChange(CameraPosition position) {
-		LatLng delta = zoomToDelta(position.zoom, position.target);
+		LatLng delta = LatLngUtils.zoomToDelta(position.zoom, position.target, this.getWidth(), this.getHeight());
 		WritableMap eventData = Arguments.createMap();
 		WritableMap region = Arguments.createMap();
 		eventData.putBoolean("continuous", true);
@@ -147,7 +144,7 @@ public class ReactMapView extends MapView implements OnCameraChangeListener {
 
 	@Override
 	public void onCameraChangeFinish(CameraPosition position) {
-		LatLng delta = zoomToDelta(position.zoom, position.target);
+		LatLng delta = LatLngUtils.zoomToDelta(position.zoom, position.target, this.getWidth(), this.getHeight());
 		WritableMap eventData = Arguments.createMap();
 		WritableMap region = Arguments.createMap();
 		eventData.putBoolean("continuous", false);
@@ -157,45 +154,6 @@ public class ReactMapView extends MapView implements OnCameraChangeListener {
 		region.putDouble("longitudeDelta", delta.longitude);
 		eventData.putMap("region", region);
 		this.onNativeEvent("topChange", eventData);
-	}
-
-	private LatLng zoomToDelta(float zoom, LatLng center) {
-		double centerPixelX = this.longitudeToPixelSpaceX(center.longitude);
-		double centerPixelY = this.latitudeToPixelSpaceY(center.latitude);
-		float zoomExponent = 20 - zoom;
-		double zoomScale = Math.pow(2, zoomExponent);
-		double scaledMapWidth = zoomScale * this.getWidth();
-		double scaledMapHeight = zoomScale * this.getHeight();
-		double topLeftPixelX = centerPixelX - (scaledMapWidth / 2);
-		double topLeftPixelY = centerPixelY - (scaledMapHeight / 2);
-		double minLng = this.pixelSpaceXToLongitude(topLeftPixelX);
-		double maxLng = this.pixelSpaceXToLongitude(topLeftPixelX + scaledMapWidth);
-		double longitudeDelta = maxLng - minLng;
-		double minLat = this.pixelSpaceYToLatitude(topLeftPixelY);
-		double maxLat = this.pixelSpaceYToLatitude(topLeftPixelY + scaledMapHeight);
-		double latitudeDelta = -1 * (maxLat - minLat);
-		return new LatLng(latitudeDelta, longitudeDelta);
-	}
-
-	private double longitudeToPixelSpaceX(double longitude) {
-		return Math.round(MERCATOR_OFFSET + MERCATOR_RADIUS * longitude * Math.PI / 180.0);
-	}
-
-	private double latitudeToPixelSpaceY(double latitude) {
-		return Math
-				.round(MERCATOR_OFFSET - MERCATOR_RADIUS
-						* Math.log(
-								(1 + Math.sin(latitude * Math.PI / 180.0)) / (1 - Math.sin(latitude * Math.PI / 180.0)))
-						/ 2.0);
-	}
-
-	private double pixelSpaceXToLongitude(double pixelX) {
-		return ((Math.round(pixelX) - MERCATOR_OFFSET) / MERCATOR_RADIUS) * 180.0 / Math.PI;
-	}
-
-	private double pixelSpaceYToLatitude(double pixelY) {
-		return (Math.PI / 2.0 - 2.0 * Math.atan(Math.exp((Math.round(pixelY) - MERCATOR_OFFSET) / MERCATOR_RADIUS)))
-				* 180.0 / Math.PI;
 	}
 
 }
