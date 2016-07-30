@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/yptech/react-native-yyamap.git.git"
+    "url": "git+https://github.com/yptech/react-native-yyamap.git"
   },
   "keywords": [
     "amap",
@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/yptech/react-native-yyamap.git/issues"
   },
-  "homepage": "https://github.com/yptech/react-native-yyamap.git#readme"
+  "homepage": "https://github.com/yptech/react-native-yyamap.git#readme",
+  "devDependencies": {
+    "react-native": "^0.25.1"
+  }
 }

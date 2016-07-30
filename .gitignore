@@ -6,3 +6,5 @@ ReactAMapDemo
 /.classpath
 /.project
 /bin/
+/.externalToolBuilders/
+/.settings/
