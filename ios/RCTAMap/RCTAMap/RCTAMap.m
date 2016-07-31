@@ -13,6 +13,7 @@
 #import "RCTAMapAnnotation.h"
 #import "RCTAMapOverlay.h"
 #import "RCTUtils.h"
+#import <UIView+React.h>
 
 const CLLocationDegrees RCTAMapDefaultSpan = 0.005;
 const NSTimeInterval RCTAMapRegionChangeObserveInterval = 0.1;
@@ -203,5 +204,9 @@ const CGFloat RCTAMapZoomBoundBuffer = 0.01;
     }
 }
 
+- (void)reactSetFrame:(CGRect)frame {
+    //    [super reactSetFrame:frame];
+    [self sizeThatFits:frame.size];
+}
 
 @end
