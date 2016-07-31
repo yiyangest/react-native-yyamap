@@ -8,16 +8,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/yiyangest/react-native-yyamap.git%22.git"
+    "url": "git+https://github.com/yptech/react-native-yyamap.git"
   },
   "keywords": [
     "amap",
     "react-native"
   ],
-  "author": "yiyangest",
+  "author": "yunpeng tech",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/yiyangest/react-native-yyamap.git%22/issues"
+    "url": "https://github.com/yptech/react-native-yyamap.git/issues"
   },
-  "homepage": "https://github.com/yiyangest/react-native-yyamap.git%22#readme"
+  "homepage": "https://github.com/yptech/react-native-yyamap.git#readme"
 }

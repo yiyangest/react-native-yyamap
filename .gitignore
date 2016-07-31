@@ -3,3 +3,8 @@ npm-debug.log
 node_modules/
 ReactAMapDemo
 *.xcuserstate
+/.classpath
+/.project
+/bin/
+/.externalToolBuilders/
+/.settings/
