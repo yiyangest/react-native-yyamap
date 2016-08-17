@@ -1,7 +1,9 @@
 'use strict';
 
-import React from 'react';
-import {
+import React, { Component, PropTypes } from 'react';
+import ReactNative from 'react-native';
+
+var {
     EdgeInsetsPropType,
     Image,
     NativeMethodsMixin,
@@ -12,7 +14,7 @@ import {
     UIManager,
     processColor,
     ColorPropType,
-} from 'react-native';
+} = require('react-native');
 
 import deprecatedPropType from 'react-native/Libraries/Utilities/deprecatedPropType';
 import resolveAssetSource from 'react-native/Libraries/Image/resolveAssetSource';
@@ -141,6 +143,22 @@ const MAMapView= React.createClass({
        */
       latitudeDelta: React.PropTypes.number,
       longitudeDelta: React.PropTypes.number,
+    }),
+    
+    circle: React.PropTypes.shape({
+      /**
+       * Coordinates for the center of the map.
+       */
+      latitude: React.PropTypes.number.isRequired,
+      longitude: React.PropTypes.number.isRequired,
+
+      /**
+       
+       */
+      radius: React.PropTypes.number,
+      strokeColor: React.PropTypes.number,
+      fillColor: React.PropTypes.number,
+      strokeWidth: React.PropTypes.number
     }),
 
     /**

@@ -123,6 +123,11 @@ public class ReactMapMarker {
             }
         }
 
+        if(annotation.hasKey("color")) {
+            float markerColor = (float)annotation.getDouble("color");
+            options.icon(BitmapDescriptorFactory.defaultMarker(markerColor));
+        }
+
         this.mOptions = options;
 
     }

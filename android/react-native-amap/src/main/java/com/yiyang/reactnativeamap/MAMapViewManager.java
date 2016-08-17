@@ -1,6 +1,7 @@
 package com.yiyang.reactnativeamap;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.StrictMode;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -9,6 +10,7 @@ import com.amap.api.maps2d.AMap;
 import com.amap.api.maps2d.CameraUpdateFactory;
 import com.amap.api.maps2d.MapView;
 import com.amap.api.maps2d.model.CameraPosition;
+import com.amap.api.maps2d.model.CircleOptions;
 import com.amap.api.maps2d.model.LatLng;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
@@ -122,13 +124,27 @@ public class MAMapViewManager extends SimpleViewManager<ReactMapView> {
         mapView.setOverlays(overlays);
     }
 
+    @ReactProp(name = "circle")
+    public void setCircle(ReactMapView mapView, @Nullable ReadableMap circle) {
+        if (circle != null) {
+            double latitude = circle.getDouble("latitude");
+            double longitude = circle.getDouble("longitude");
+            int radius = circle.getInt("radius");
+            int strokeWidth = circle.getInt("strokeWidth");
+            mapView.getMap().addCircle(new CircleOptions().center(new LatLng(latitude, longitude))
+                    .radius(radius).strokeColor(0xFFFF0000).fillColor(0x4400FF00)
+                    .strokeWidth(strokeWidth));
+        }
+    }
+
     @ReactProp(name = "region")
     public void setRegion(ReactMapView mapView, @Nullable ReadableMap center) {
         if (center != null) {
             double latitude = center.getDouble("latitude");
             double longitude = center.getDouble("longitude");
+            int zoomLevel = center.getInt("zoomLevel");
             CameraPosition cameraPosition = new CameraPosition.Builder()
-                    .target(new LatLng(latitude, longitude))
+                    .target(new LatLng(latitude, longitude)).zoom(zoomLevel)
                     .build();
             mapView.getMap().moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
         }
