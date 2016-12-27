@@ -204,4 +204,9 @@ const CGFloat RCTAMapZoomBoundBuffer = 0.01;
     }
 }
 
+- (void)reactSetFrame:(CGRect)frame {
+    self.frame = frame;
+    [super reactSetFrame:frame];
+}
+
 @end
