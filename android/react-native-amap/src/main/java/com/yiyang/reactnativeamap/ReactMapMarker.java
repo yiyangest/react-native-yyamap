@@ -153,7 +153,7 @@ public class ReactMapMarker {
     }
 
     public void update() {
-        if (this.mOptions == null) {
+        if (this.mMarker != null) {
             this.mMarker.setIcon(getIcon());
         } else {
             this.mOptions.icon(getIcon());
