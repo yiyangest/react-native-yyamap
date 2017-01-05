@@ -37,6 +37,7 @@ public class ReactMapMarker {
     private MarkerOptions mOptions;
 
     private String id;
+    private String image;
 
     private Context mContext;
 
@@ -85,6 +86,7 @@ public class ReactMapMarker {
         }
         id = annotation.getString("id");
         MarkerOptions options = new MarkerOptions();
+        this.mOptions = options;
         double latitude = annotation.getDouble("latitude");
         double longitude = annotation.getDouble("longitude");
 
@@ -123,7 +125,6 @@ public class ReactMapMarker {
             }
         }
 
-        this.mOptions = options;
 
     }
 
@@ -153,6 +154,7 @@ public class ReactMapMarker {
     }
 
     public void update() {
+    	System.out.println(this.id + "{" + this.mMarker + "," + this.mOptions + "}");
         if (this.mMarker != null) {
             this.mMarker.setIcon(getIcon());
         } else {
