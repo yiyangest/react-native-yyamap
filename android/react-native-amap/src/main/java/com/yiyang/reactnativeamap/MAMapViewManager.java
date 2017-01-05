@@ -95,7 +95,13 @@ public class MAMapViewManager extends SimpleViewManager<ReactMapView> {
 		int size = value.size();
 		for (int i = 0; i < size; i++) {
 			ReadableMap annotation = value.getMap(i);
-			ReactMapMarker marker = new ReactMapMarker(this.mContext);
+			String id = annotation.getString("id");
+			ReactMapMarker marker = null;
+			if (mapView.getMarkers().containsKey(id)) {
+				marker = mapView.getMarkers().get(id);
+			} else {
+				marker = new ReactMapMarker(this.mContext);
+			}
 			marker.buildMarker(annotation);
 			markers.add(marker);
 		}

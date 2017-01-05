@@ -2,6 +2,8 @@ package com.yiyang.reactnativeamap;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 
 import com.amap.api.maps2d.AMap.OnCameraChangeListener;
 import com.amap.api.maps2d.MapView;
@@ -18,15 +20,21 @@ import android.content.Context;
  * Created by yiyang on 16/2/29.
  */
 public class ReactMapView extends MapView implements OnCameraChangeListener {
-	private List<ReactMapMarker> mMarkers = new ArrayList<ReactMapMarker>();
-	private List<String> mMarkerIds = new ArrayList<String>();
+//	private List<ReactMapMarker> mMarkers = new ArrayList<ReactMapMarker>();
+//	private List<String> mMarkerIds = new ArrayList<String>();
+	private Map<String, ReactMapMarker> mMarkers = new HashMap<String, ReactMapMarker>();
 
-	private List<ReactMapOverlay> mOverlays = new ArrayList<ReactMapOverlay>();
-	private List<String> mOverlayIds = new ArrayList<String>();
+//	private List<ReactMapOverlay> mOverlays = new ArrayList<ReactMapOverlay>();
+//	private List<String> mOverlayIds = new ArrayList<String>();
+	private Map<String, ReactMapOverlay> mOverlays = new HashMap<String, ReactMapOverlay>();
 
 	public ReactMapView(Context context) {
 		super(context);
 		this.getMap().setOnCameraChangeListener(this);
+	}
+	
+	public Map<String, ReactMapOverlay> getOverlays() {
+		return this.mOverlays;
 	}
 
 	public void setOverlays(List<ReactMapOverlay> overlays) {
@@ -41,12 +49,12 @@ public class ReactMapView extends MapView implements OnCameraChangeListener {
 
 			newOverlayIds.add(overlay.getId());
 
-			if (!mOverlayIds.contains(overlay.getId())) {
+			if (!mOverlays.containsKey(overlay.getId())) {
 				overlaysToAdd.add(overlay);
 			}
 		}
 
-		for (ReactMapOverlay overlay : this.mOverlays) {
+		for (ReactMapOverlay overlay : this.mOverlays.values()) {
 			if (overlay instanceof ReactMapOverlay == false) {
 				continue;
 			}
@@ -59,7 +67,7 @@ public class ReactMapView extends MapView implements OnCameraChangeListener {
 		if (!overlaysToDelete.isEmpty()) {
 			for (ReactMapOverlay overlay : overlaysToDelete) {
 				overlay.getPolyline().remove();
-				this.mOverlays.remove(overlay);
+				this.mOverlays.remove(overlay.getId());
 			}
 		}
 
@@ -67,12 +75,10 @@ public class ReactMapView extends MapView implements OnCameraChangeListener {
 			for (ReactMapOverlay overlay : overlaysToAdd) {
 				if (overlay.getOptions() != null) {
 					overlay.addToMap(this.getMap());
-					this.mOverlays.add(overlay);
+					this.mOverlays.put(overlay.getId(), overlay);
 				}
 			}
 		}
-
-		this.mOverlayIds = newOverlayIds;
 
 	}
 
@@ -89,12 +95,12 @@ public class ReactMapView extends MapView implements OnCameraChangeListener {
 
 			newMarkerIds.add(marker.getId());
 
-			if (!mMarkerIds.contains(marker.getId())) {
+			if (!this.mMarkers.containsKey(marker.getId())) {
 				markersToAdd.add(marker);
 			}
 		}
 
-		for (ReactMapMarker marker : this.mMarkers) {
+		for (ReactMapMarker marker : this.mMarkers.values()) {
 			if (marker instanceof ReactMapMarker == false) {
 				continue;
 			}
@@ -107,7 +113,7 @@ public class ReactMapView extends MapView implements OnCameraChangeListener {
 		if (!markersToDelete.isEmpty()) {
 			for (ReactMapMarker marker : markersToDelete) {
 				marker.getMarker().destroy();
-				this.mMarkers.remove(marker);
+				this.mMarkers.remove(marker.getId());
 			}
 		}
 
@@ -115,12 +121,15 @@ public class ReactMapView extends MapView implements OnCameraChangeListener {
 			for (ReactMapMarker marker : markersToAdd) {
 				if (marker.getOptions() != null) {
 					marker.addToMap(this.getMap());
-					this.mMarkers.add(marker);
+					this.mMarkers.put(marker.getId(), marker);
 				}
 			}
 		}
-
-		this.mMarkerIds = newMarkerIds;
+		
+	}
+	
+	public Map<String, ReactMapMarker> getMarkers() {
+		return this.mMarkers;
 	}
 
 	public void onNativeEvent(String eventName, WritableMap eventData) {
