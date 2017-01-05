@@ -132,8 +132,8 @@ const CGFloat RCTAMapZoomBoundBuffer = 0.01;
             [annotationsToAdd addObject:annotation];
         }
     }
-    for (RCTAMapAnnotation *annotation in self.annotations) {
-        if (![annotations isKindOfClass:[RCTAMapAnnotation class]]) {
+    for (RCTAMapAnnotation *annotation in super.annotations) {
+        if (![annotation isKindOfClass:[RCTAMapAnnotation class]]) {
             continue;
         }
         
