@@ -8,12 +8,12 @@
 
 #import "RCTAMap.h"
 
-#import "RCTEventDispatcher.h"
-#import "RCTLog.h"
+#import <React/RCTEventDispatcher.h>
+#import <React/RCTLog.h>
 #import "RCTAMapAnnotation.h"
 #import "RCTAMapOverlay.h"
-#import "RCTUtils.h"
-#import <UIView+React.h>
+#import <React/RCTUtils.h>
+#import <React/UIView+React.h>
 
 const CLLocationDegrees RCTAMapDefaultSpan = 0.005;
 const NSTimeInterval RCTAMapRegionChangeObserveInterval = 0.1;

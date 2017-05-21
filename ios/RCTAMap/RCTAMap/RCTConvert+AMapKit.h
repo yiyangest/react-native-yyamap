@@ -8,7 +8,7 @@
 
 #import <MAMapKit/MAMapKit.h>
 
-#import "RCTConvert.h"
+#import <React/RCTConvert.h>
 
 @class RCTAMapAnnotation;
 @class RCTAMapOverlay;

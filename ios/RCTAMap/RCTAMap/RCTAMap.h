@@ -11,8 +11,8 @@
 #import <MAMapKit/MAMapKit.h>
 
 
-#import "RCTConvert+MapKit.h"
-#import "RCTComponent.h"
+#import "RCTConvert+AMapKit.h"
+#import <React/RCTComponent.h>
 #import "RCTAMapAnnotation.h"
 #import "RCTAMapOverlay.h"
 
