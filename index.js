@@ -1,6 +1,6 @@
 'use strict';
 
-import React from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {
     EdgeInsetsPropType,
@@ -35,7 +35,7 @@ export type MAAnnotationDragState = $Enum<{
 //         return <View></View>;
 //     }
 // }
-const MAMapView= React.createClass({
+class MAMapView extends Component {
 
   mixins: [NativeMethodsMixin],
 
@@ -466,7 +466,7 @@ const MAMapView= React.createClass({
       />
     );
   },
-});
+}
 
 const styles = StyleSheet.create({
   annotationView: {
