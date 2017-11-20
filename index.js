@@ -37,9 +37,9 @@ export type MAAnnotationDragState = $Enum<{
 // }
 class MAMapView extends Component {
 
-  mixins: [NativeMethodsMixin],
+  //mixins: [NativeMethodsMixin];
 
-  propTypes: {
+  static propTypes = {
     ...View.propTypes,
     /**
      * Used to style and layout the `MapView`.  See `StyleSheet.js` and
@@ -305,9 +305,9 @@ class MAMapView extends Component {
      * @platform android
      */
     active: PropTypes.bool,
-  },
+  };
 
-  render: function() {
+  render() {
     let children = [], {annotations, overlays, followUserLocation} = this.props;
     annotations = annotations && annotations.map((annotation: Object) => {
       let {
@@ -465,7 +465,7 @@ class MAMapView extends Component {
         onAnnotationBlur={onAnnotationBlur}
       />
     );
-  },
+  };
 }
 
 const styles = StyleSheet.create({
@@ -503,4 +503,4 @@ const RCTAMap = requireNativeComponent('RCTAMap', MAMapView, {
   }
 });
 
-module.exports = MAMapView;
+export default MAMapView;
