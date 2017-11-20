@@ -1,6 +1,7 @@
 'use strict';
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import {
     EdgeInsetsPropType,
     Image,
@@ -53,7 +54,7 @@ const MAMapView= React.createClass({
      * **NOTE**: on iOS, you need to add the `NSLocationWhenInUseUsageDescription`
      * key in Info.plist to enable geolocation, otherwise it will fail silently.
      */
-    showsUserLocation: React.PropTypes.bool,
+    showsUserLocation: PropTypes.bool,
 
     /**
      * If `true` the map will follow the user's location whenever it changes.
@@ -61,27 +62,27 @@ const MAMapView= React.createClass({
      * Default value is `true`.
      * @platform ios
      */
-    followUserLocation: React.PropTypes.bool,
+    followUserLocation: PropTypes.bool,
 
     /**
      * If `false` points of interest won't be displayed on the map.
      * Default value is `true`.
      * @platform ios
      */
-    showsPointsOfInterest: React.PropTypes.bool,
+    showsPointsOfInterest: PropTypes.bool,
 
     /**
      * If `false` compass won't be displayed on the map.
      * Default value is `true`.
      * @platform ios
      */
-    showsCompass: React.PropTypes.bool,
+    showsCompass: PropTypes.bool,
 
     /**
      * If `false` the user won't be able to pinch/zoom the map.
      * Default value is `true`.
      */
-    zoomEnabled: React.PropTypes.bool,
+    zoomEnabled: PropTypes.bool,
 
     /**
      * When this property is set to `true` and a valid camera is associated with
@@ -90,7 +91,7 @@ const MAMapView= React.createClass({
      * camera’s heading angle is ignored and the map is always oriented so
      * that true north is situated at the top of the map view
      */
-    rotateEnabled: React.PropTypes.bool,
+    rotateEnabled: PropTypes.bool,
 
     /**
      * When this property is set to `true` and a valid camera is associated
@@ -99,13 +100,13 @@ const MAMapView= React.createClass({
      * angle is ignored and the map is always displayed as if the user
      * is looking straight down onto it.
      */
-    pitchEnabled: React.PropTypes.bool,
+    pitchEnabled: PropTypes.bool,
 
     /**
      * If `false` the user won't be able to change the map region being displayed.
      * Default value is `true`.
      */
-    scrollEnabled: React.PropTypes.bool,
+    scrollEnabled: PropTypes.bool,
 
     /**
      * The map type to be displayed.
@@ -116,7 +117,7 @@ const MAMapView= React.createClass({
      *
      * @platform ios
      */
-    mapType: React.PropTypes.oneOf([
+    mapType: PropTypes.oneOf([
       'standard',
       'satellite',
       'hybrid',
@@ -128,70 +129,70 @@ const MAMapView= React.createClass({
      * The region is defined by the center coordinates and the span of
      * coordinates to display.
      */
-    region: React.PropTypes.shape({
+    region: PropTypes.shape({
       /**
        * Coordinates for the center of the map.
        */
-      latitude: React.PropTypes.number.isRequired,
-      longitude: React.PropTypes.number.isRequired,
+      latitude: PropTypes.number.isRequired,
+      longitude: PropTypes.number.isRequired,
 
       /**
        * Distance between the minimum and the maximum latitude/longitude
        * to be displayed.
        */
-      latitudeDelta: React.PropTypes.number,
-      longitudeDelta: React.PropTypes.number,
+      latitudeDelta: PropTypes.number,
+      longitudeDelta: PropTypes.number,
     }),
 
     /**
      * Map annotations with title/subtitle.
      * @platform ios
      */
-    annotations: React.PropTypes.arrayOf(React.PropTypes.shape({
+    annotations: PropTypes.arrayOf(PropTypes.shape({
       /**
        * The location of the annotation.
        */
-      latitude: React.PropTypes.number.isRequired,
-      longitude: React.PropTypes.number.isRequired,
+      latitude: PropTypes.number.isRequired,
+      longitude: PropTypes.number.isRequired,
 
       /**
        * Whether the pin drop should be animated or not
        */
-      animateDrop: React.PropTypes.bool,
+      animateDrop: PropTypes.bool,
 
       /**
        * Whether the pin should be draggable or not
        */
-      draggable: React.PropTypes.bool,
+      draggable: PropTypes.bool,
 
       /**
        * Event that fires when the annotation drag state changes.
        */
-      onDragStateChange: React.PropTypes.func,
+      onDragStateChange: PropTypes.func,
 
       /**
        * Event that fires when the annotation gets was tapped by the user
        * and the callout view was displayed.
        */
-      onFocus: React.PropTypes.func,
+      onFocus: PropTypes.func,
 
       /**
        * Event that fires when another annotation or the mapview itself
        * was tapped and a previously shown annotation will be closed.
        */
-      onBlur: React.PropTypes.func,
+      onBlur: PropTypes.func,
 
       /**
        * Annotation title/subtile.
        */
-      title: React.PropTypes.string,
-      subtitle: React.PropTypes.string,
+      title: PropTypes.string,
+      subtitle: PropTypes.string,
 
       /**
        * Callout views.
        */
-      leftCalloutView: React.PropTypes.element,
-      rightCalloutView: React.PropTypes.element,
+      leftCalloutView: PropTypes.element,
+      rightCalloutView: PropTypes.element,
 
       /**
        * The pin color. This can be any valid color string, or you can use one
@@ -202,7 +203,7 @@ const MAMapView= React.createClass({
        * are supported for regular pins. For custom pin images, any tintColor
        * value is supported on all iOS versions.
        */
-      tintColor: React.PropTypes.number,
+      tintColor: PropTypes.number,
 
       /**
        * Custom pin image. This must be a static image resource inside the app.
@@ -212,30 +213,30 @@ const MAMapView= React.createClass({
       /**
        * Custom pin view. If set, this replaces the pin or custom pin image.
        */
-      view: React.PropTypes.element,
+      view: PropTypes.element,
 
       /**
        * annotation id
        */
-      id: React.PropTypes.string,
+      id: PropTypes.string,
 
       /**
        * Deprecated. Use the left/right/detailsCalloutView props instead.
        */
       hasLeftCallout: deprecatedPropType(
-        React.PropTypes.bool,
+        PropTypes.bool,
         'Use `leftCalloutView` instead.'
       ),
       hasRightCallout: deprecatedPropType(
-        React.PropTypes.bool,
+        PropTypes.bool,
         'Use `rightCalloutView` instead.'
       ),
       onLeftCalloutPress: deprecatedPropType(
-        React.PropTypes.func,
+        PropTypes.func,
         'Use `leftCalloutView` instead.'
       ),
       onRightCalloutPress: deprecatedPropType(
-        React.PropTypes.func,
+        PropTypes.func,
         'Use `rightCalloutView` instead.'
       ),
     })),
@@ -244,39 +245,39 @@ const MAMapView= React.createClass({
      * Map overlays
      * @platform ios
      */
-    overlays: React.PropTypes.arrayOf(React.PropTypes.shape({
+    overlays: PropTypes.arrayOf(PropTypes.shape({
       /**
        * Polyline coordinates
        */
-      coordinates: React.PropTypes.arrayOf(React.PropTypes.shape({
-        latitude: React.PropTypes.number.isRequired,
-        longitude: React.PropTypes.number.isRequired
+      coordinates: PropTypes.arrayOf(PropTypes.shape({
+        latitude: PropTypes.number.isRequired,
+        longitude: PropTypes.number.isRequired
       })),
 
       /**
        * Line attributes
        */
-      lineWidth: React.PropTypes.number,
+      lineWidth: PropTypes.number,
       strokeColor: ColorPropType,
       fillColor: ColorPropType,
 
       /**
        * Overlay id
        */
-      id: React.PropTypes.string
+      id: PropTypes.string
     })),
 
     /**
      * Maximum size of area that can be displayed.
      * @platform ios
      */
-    maxDelta: React.PropTypes.number,
+    maxDelta: PropTypes.number,
 
     /**
      * Minimum size of area that can be displayed.
      * @platform ios
      */
-    minDelta: React.PropTypes.number,
+    minDelta: PropTypes.number,
 
     /**
      * Insets for the map's legal label, originally at bottom left of the map.
@@ -288,22 +289,22 @@ const MAMapView= React.createClass({
     /**
      * Callback that is called continuously when the user is dragging the map.
      */
-    onRegionChange: React.PropTypes.func,
+    onRegionChange: PropTypes.func,
 
     /**
      * Callback that is called once, when the user is done moving the map.
      */
-    onRegionChangeComplete: React.PropTypes.func,
+    onRegionChangeComplete: PropTypes.func,
 
     /**
      * Deprecated. Use annotation onFocus and onBlur instead.
      */
-    onAnnotationPress: React.PropTypes.func,
+    onAnnotationPress: PropTypes.func,
 
     /**
      * @platform android
      */
-    active: React.PropTypes.bool,
+    active: PropTypes.bool,
   },
 
   render: function() {
